@@ -3,7 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 async function getFeaturedProducts() {
-  const response = await api('/products/featured')
+  const response = await api('/products/featured', {
+    next: {
+      revalidate: 60 * 60, // atualiza os dados a cada 1 hora
+    },
+    //cache: 'no-cache' --não armazena cache, quanto é necessário que os dados estejam sempre atualizados
+  })
 
   const products = await response.json()
 
